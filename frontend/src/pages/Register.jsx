@@ -108,19 +108,26 @@ const Register = () => {
               required
             />
 
-            <div className="w-full flex flex-col gap-1.5 mb-4">
+            <div className="w-full flex flex-col gap-1.5 mb-4 relative">
               <label className="text-sm font-semibold text-gray-600 dark:text-gray-300">
                 Join As
               </label>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border bg-white/50 dark:bg-gray-800/40 border-gray-300 dark:border-white/10 text-gray-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all duration-300 backdrop-blur-md"
-              >
-                <option value="resident">Resident</option>
-                <option value="admin">Admin</option>
-              </select>
+              <div className="relative">
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="w-full appearance-none px-4 py-3 pr-10 rounded-xl border bg-white/50 dark:bg-gray-800/40 border-gray-300 dark:border-white/10 text-gray-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all duration-300 backdrop-blur-md"
+                >
+                  <option value="resident">Resident</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500 dark:text-gray-400">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {formData.role === 'resident' && (
