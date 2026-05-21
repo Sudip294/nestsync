@@ -2,8 +2,10 @@ import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import { Resend } from 'resend';
 
-// Initialize Resend with dummy key (needs to be replaced in .env)
-const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
+// Helper to get Resend instance with env loaded
+const getResendClient = () => {
+  return new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
+};
 
 // Generate JWT
 const generateToken = (id) => {
@@ -36,6 +38,8 @@ export const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        flatNumber: user.flatNumber,
+        contactNumber: user.contactNumber,
         token: generateToken(user._id),
       });
     } else {
@@ -58,6 +62,8 @@ export const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        flatNumber: user.flatNumber,
+        contactNumber: user.contactNumber,
         token: generateToken(user._id),
       });
     } else {
@@ -79,15 +85,21 @@ export const forgotPassword = async (req, res) => {
     user.otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
     await user.save();
 
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
+    const resendClient = getResendClient();
+    const { data, error } = await resendClient.emails.send({
+      from: 'NestSync <onboarding@resend.dev>',
       to: email,
       subject: 'Password Reset OTP',
       html: `<p>Your OTP for password reset is: <strong>${otp}</strong></p><p>It is valid for 10 minutes.</p>`
     });
 
+    if (error) {
+      throw new Error(`Resend API Error: ${error.message || JSON.stringify(error)}`);
+    }
+
     res.json({ message: 'OTP sent to email successfully' });
   } catch (error) {
+    console.error('Forgot password error details:', error);
     res.status(500).json({ message: error.message });
   }
 };
