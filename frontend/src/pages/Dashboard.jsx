@@ -3,11 +3,13 @@ import { useAuth } from '../context/AuthContext';
 import Card from '../components/ui/Card';
 import { FiUsers, FiAlertCircle, FiFileText, FiCreditCard, FiUpload, FiSettings } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Dashboard = () => {
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin';
+  const navigate = useNavigate();
   
   const [societyName, setSocietyName] = useState('SmartNest Co-op');
   const [societyLogo, setSocietyLogo] = useState('');
@@ -196,16 +198,16 @@ const Dashboard = () => {
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Need to raise a complaint or pay maintenance?</p>
             <div className="flex flex-col gap-3">
               {!isAdmin && (
-                <button className="w-full py-3 px-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition-all duration-300">
+                <button onClick={() => navigate('/complaints')} className="w-full py-3 px-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition-all duration-300">
                   File a Complaint
                 </button>
               )}
               {isAdmin && (
-                <button className="w-full py-3 px-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition-all duration-300">
+                <button onClick={() => navigate('/notices')} className="w-full py-3 px-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition-all duration-300">
                   Post New Notice
                 </button>
               )}
-              <button className="w-full py-3 px-4 bg-white/10 dark:bg-white/5 hover:bg-white/20 dark:hover:bg-white/10 text-gray-800 dark:text-white font-semibold rounded-xl border border-gray-200 dark:border-white/10 transition-all duration-300">
+              <button onClick={() => navigate('/notices')} className="w-full py-3 px-4 bg-white/10 dark:bg-white/5 hover:bg-white/20 dark:hover:bg-white/10 text-gray-800 dark:text-white font-semibold rounded-xl border border-gray-200 dark:border-white/10 transition-all duration-300">
                 View All Notices
               </button>
             </div>
