@@ -4,6 +4,7 @@ import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 import DashboardLayout from './components/layout/DashboardLayout';
 
 // Pages
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route element={<PublicRoute />}>
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -34,7 +36,7 @@ function App() {
         </Route>
 
         {/* Fallbacks */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
