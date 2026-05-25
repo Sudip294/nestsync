@@ -5,6 +5,7 @@ import { Input, Button } from '../components/ui/FormElements';
 import Card from '../components/ui/Card';
 import ThemeToggle from '../components/ui/ThemeToggle';
 import { motion } from 'framer-motion';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -48,6 +49,12 @@ const Register = () => {
       {/* Circles Background */}
       <div className="absolute w-[500px] h-[500px] rounded-full bg-indigo-500/10 dark:bg-indigo-500/5 -top-40 -left-40 blur-3xl pointer-events-none" />
       <div className="absolute w-[500px] h-[500px] rounded-full bg-purple-500/10 dark:bg-purple-500/5 -bottom-40 -right-40 blur-3xl pointer-events-none" />
+
+      <div className="absolute top-6 left-6">
+        <Link to="/" className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors bg-white/50 dark:bg-gray-800/50 px-4 py-2 rounded-xl backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-md">
+          <FiArrowLeft className="w-4 h-4" /> Back to Home
+        </Link>
+      </div>
 
       <div className="absolute top-6 right-6">
         <ThemeToggle />
