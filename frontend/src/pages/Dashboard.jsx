@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import Card from '../components/ui/Card';
-import { FiUsers, FiAlertCircle, FiFileText, FiCreditCard, FiUpload, FiSettings } from 'react-icons/fi';
+import { FiUsers, FiAlertCircle, FiFileText, FiCreditCard, FiUpload, FiSettings, FiTrash2 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -162,20 +162,32 @@ const Dashboard = () => {
                     {societyLogo ? (
                       <img src={societyLogo} alt="Preview" className="w-12 h-12 rounded-xl object-cover border dark:border-white/10" />
                     ) : (
-                      <div className="w-12 h-12 rounded-xl bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-400">
+                      <div className="w-12 h-12 rounded-xl bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-400 text-xs">
                         No Logo
                       </div>
                     )}
-                    <label className="flex items-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-xs rounded-xl cursor-pointer shadow-lg shadow-indigo-500/20 transition-all duration-300">
-                      <FiUpload className="w-4 h-4" />
-                      Upload Logo
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleLogoUpload}
-                        className="hidden"
-                      />
-                    </label>
+                    <div className="flex flex-col gap-2">
+                      <label className="flex items-center justify-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-xs rounded-xl cursor-pointer shadow-lg shadow-indigo-500/20 transition-all duration-300">
+                        <FiUpload className="w-4 h-4" />
+                        Upload Logo
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleLogoUpload}
+                          className="hidden"
+                        />
+                      </label>
+                      {societyLogo && (
+                        <button
+                          type="button"
+                          onClick={() => setSocietyLogo('')}
+                          className="flex items-center justify-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold text-xs rounded-xl cursor-pointer shadow-lg shadow-red-500/20 transition-all duration-300"
+                        >
+                          <FiTrash2 className="w-4 h-4" />
+                          Remove
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
 
