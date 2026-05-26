@@ -68,77 +68,93 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 overflow-hidden">
-        {/* Floating Particles in Hero */}
-        <div className="absolute inset-0 pointer-events-none">
-           {[...Array(10)].map((_, i) => (
-             <motion.div
-               key={i}
-               initial={{ opacity: 0, y: Math.random() * 100 }}
-               animate={{ opacity: [0.2, 0.5, 0.2], y: [null, Math.random() * -100] }}
-               transition={{ duration: Math.random() * 5 + 5, repeat: Infinity, ease: "linear" }}
-               className="absolute w-2 h-2 rounded-full bg-indigo-500/30"
-               style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
-             />
-           ))}
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6 overflow-hidden min-h-[90vh] flex flex-col justify-center">
+        {/* Full Screen Impressive Animated Background */}
+        <div className="absolute inset-0 z-0 bg-gray-50/50 dark:bg-gray-950/80">
+          {/* Animated Glowing Orbs */}
+          <motion.div 
+            animate={{ 
+              x: [0, 150, 0, -150, 0], 
+              y: [0, 100, 200, 100, 0],
+              scale: [1, 1.3, 1]
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[-10%] left-[10%] w-[40vw] h-[40vw] bg-indigo-500/30 dark:bg-indigo-600/30 rounded-full blur-[120px]"
+          />
+          <motion.div 
+            animate={{ 
+              x: [0, -200, 0, 200, 0], 
+              y: [0, -150, 0, 150, 0],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[20%] right-[10%] w-[50vw] h-[50vw] bg-purple-500/30 dark:bg-purple-600/30 rounded-full blur-[120px]"
+          />
+          <motion.div 
+            animate={{ 
+              x: [0, 100, -100, 0], 
+              y: [0, -100, 100, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-[-10%] left-[30%] w-[35vw] h-[35vw] bg-pink-500/30 dark:bg-pink-600/30 rounded-full blur-[120px]"
+          />
+          
+          {/* Moving Grid Background */}
+          <motion.div 
+            animate={{ backgroundPosition: ['0px 0px', '40px 40px'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 opacity-40 dark:opacity-30"
+            style={{
+              backgroundImage: 'linear-gradient(to right, #80808033 1px, transparent 1px), linear-gradient(to bottom, #80808033 1px, transparent 1px)',
+              backgroundSize: '40px 40px',
+              maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, #000 40%, transparent 100%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, #000 40%, transparent 100%)'
+            }}
+          />
         </div>
 
-        <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10">
-          <div className="flex-1 text-center lg:text-left">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, type: "spring" }}
-              className="inline-block mb-6 px-4 py-1.5 rounded-full border border-indigo-200 dark:border-indigo-500/30 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-sm font-semibold tracking-wide"
-            >
-              Welcome to the future of society management
-            </motion.div>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight"
-            >
-              Modern living, <br />
-              <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">smartly managed.</span>
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-4 text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-10"
-            >
-              NestSync Portal brings your entire housing society into one beautifully crafted, easy-to-use platform. Experience community living without the hassle.
-            </motion.p>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
-            >
-              <Link to="/register" className="w-full sm:w-auto px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 rounded-2xl shadow-xl shadow-indigo-500/25 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                Create an Account <FiArrowRight />
-              </Link>
-              <Link to="/login" className="w-full sm:w-auto px-8 py-4 text-lg font-bold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-105">
-                Resident Login
-              </Link>
-            </motion.div>
-          </div>
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, type: "spring" }}
+            className="inline-block mb-8 px-5 py-2 rounded-full border border-indigo-200/50 dark:border-indigo-500/30 bg-white/50 dark:bg-indigo-500/10 backdrop-blur-md text-indigo-700 dark:text-indigo-300 text-sm font-bold tracking-wide shadow-xl shadow-indigo-500/5"
+          >
+            🚀 Welcome to the future of society management
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-tight drop-shadow-sm"
+          >
+            Modern living, <br />
+            <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">smartly managed.</span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-4 text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed"
+          >
+            NestSync Portal brings your entire housing society into one beautifully crafted, easy-to-use platform. Experience community living without the hassle.
+          </motion.p>
           
           <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
-            className="flex-1 w-full max-w-lg lg:max-w-none relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-[3rem] blur-3xl opacity-20 dark:opacity-40 animate-pulse"></div>
-            <motion.img 
-              animate={{ y: [-15, 15, -15], rotate: [0, 2, 0, -2, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              src="/hero_bg.png" 
-              alt="Futuristic Society 3D" 
-              className="relative w-full h-auto object-cover rounded-[3rem] shadow-2xl border border-white/20 dark:border-white/10 z-10"
-            />
+            <Link to="/register" className="w-full sm:w-auto px-10 py-5 text-lg font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 rounded-2xl shadow-2xl shadow-indigo-500/30 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 flex items-center justify-center gap-3">
+              Create an Account <FiArrowRight className="w-5 h-5" />
+            </Link>
+            <Link to="/login" className="w-full sm:w-auto px-10 py-5 text-lg font-bold text-gray-800 dark:text-gray-200 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-gray-200 dark:border-white/10 hover:bg-white dark:hover:bg-gray-800 rounded-2xl shadow-xl shadow-gray-200/20 dark:shadow-none transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
+              Resident Login
+            </Link>
           </motion.div>
         </div>
       </section>
