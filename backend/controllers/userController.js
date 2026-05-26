@@ -70,3 +70,28 @@ export const updateProfilePicture = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Delete user account
+export const deleteAccount = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    // Optional: Only allow if not the last admin? (ignoring for now as per prompt)
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    // Delete associated data
+    const Complaint = (await import('../models/Complaint.js')).default;
+    const Notice = (await import('../models/Notice.js')).default;
+    
+    await Complaint.deleteMany({ raisedBy: userId });
+    await Notice.deleteMany({ postedBy: userId });
+
+    // Delete user
+    await User.findByIdAndDelete(userId);
+
+    res.json({ message: 'Account deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
