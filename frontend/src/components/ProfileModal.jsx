@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const ProfileModal = ({ isOpen, onClose }) => {
-  const { user, logout, updateToken } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
@@ -33,10 +33,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
           { profilePicture: reader.result },
           { headers: { Authorization: `Bearer ${user.token}` } }
         );
-        // We need to update user context with new photo.
-        // Assuming AuthContext stores the whole user object or we need to reload.
-        // Since we don't have a direct setUser function, we can force a reload.
-        window.location.reload();
+        updateUser({ profilePicture: data.profilePicture });
       } catch (err) {
         alert(err.response?.data?.message || 'Failed to upload photo');
       } finally {
@@ -48,12 +45,12 @@ const ProfileModal = ({ isOpen, onClose }) => {
   const handlePhotoDelete = async () => {
     try {
       setLoading(true);
-      await axios.put(
+      const { data } = await axios.put(
         'http://localhost:5000/api/users/profile-picture',
         { profilePicture: '' },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
-      window.location.reload();
+      updateUser({ profilePicture: '' });
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to remove photo');
     } finally {
