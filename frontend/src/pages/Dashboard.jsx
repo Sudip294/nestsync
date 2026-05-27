@@ -90,6 +90,34 @@ const Dashboard = () => {
               : `Here is the status of your flat and updates for ${user?.flatNumber || 'your home'}.`}
           </p>
         </div>
+        
+        {/* Notification Subscribe */}
+        {('Notification' in window && Notification.permission !== 'granted') && (
+          <button
+            onClick={async () => {
+              try {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                  const registration = await navigator.serviceWorker.ready;
+                  const subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: 'BNwz26JV2xh0LfJi4vRgqukyj1fWOhI4RQJUnqnB6c88IwJbHwSZAIOhFaVM1vN3nmoJ2WVP5B5SAMX8LKK3aMU'
+                  });
+                  await axios.post('http://localhost:5000/api/users/push-subscribe', subscription, {
+                    headers: { Authorization: `Bearer ${user.token}` }
+                  });
+                  alert('Push notifications enabled!');
+                }
+              } catch (e) {
+                console.error('Error enabling push notifications:', e);
+              }
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-bold rounded-xl transition-colors text-sm"
+          >
+            <FiAlertCircle className="w-4 h-4" />
+            Enable Notifications
+          </button>
+        )}
       </div>
 
       {/* Stats Grid */}
