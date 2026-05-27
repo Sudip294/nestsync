@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { FiMessageSquare, FiShield, FiCreditCard, FiSmartphone, FiArrowRight } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiMessageSquare, FiShield, FiCreditCard, FiSmartphone, FiArrowRight, FiMenu, FiX } from 'react-icons/fi';
 import ThemeToggle from '../components/ui/ThemeToggle';
 
 const features = [
@@ -32,6 +32,8 @@ const features = [
 ];
 
 const Landing = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 font-sans text-gray-900 dark:text-gray-100 overflow-x-hidden selection:bg-indigo-500/30">
       {/* Animated Background Decor */}
@@ -55,7 +57,9 @@ const Landing = () => {
               NestSync
             </span>
           </div>
-          <div className="flex items-center gap-4">
+          
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center gap-4">
             <ThemeToggle />
             <Link to="/login" className="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
               Login
@@ -64,8 +68,47 @@ const Landing = () => {
               Get Started <FiArrowRight />
             </Link>
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <div className="flex md:hidden items-center gap-4">
+            <ThemeToggle />
+            <button 
+              className="p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+            transition={{ duration: 0.3, type: 'spring', bounce: 0 }}
+            className="md:hidden fixed inset-x-0 top-[73px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl z-40 p-6 flex flex-col gap-4 border-b border-gray-200 dark:border-white/5 shadow-2xl"
+          >
+            <Link 
+              to="/login" 
+              className="w-full text-center py-4 text-lg font-bold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Resident Login
+            </Link>
+            <Link 
+              to="/register" 
+              className="w-full flex items-center justify-center gap-2 py-4 text-lg font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-lg shadow-indigo-500/20"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Create an Account <FiArrowRight />
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6 overflow-hidden min-h-[90vh] flex flex-col justify-center">
@@ -173,7 +216,7 @@ const Landing = () => {
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 className="group p-8 rounded-[2rem] bg-white dark:bg-gray-900 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/20 dark:shadow-none hover:-translate-y-3 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 relative overflow-hidden"
               >
