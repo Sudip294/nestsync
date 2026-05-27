@@ -6,25 +6,35 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.js',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Co-op Society',
-        short_name: 'SocietyApp',
-        description: 'Society Management System',
-        theme_color: '#ffffff',
+        name: 'NestSync Portal',
+        short_name: 'NestSync',
+        description: 'Modern Society Management System',
+        theme_color: '#6366f1',
+        background_color: '#ffffff',
+        display: 'standalone',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: '/logo.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
+            src: '/logo.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ]
+      },
+      devOptions: {
+        enabled: true,
+        type: 'module',
       }
     })
   ],
