@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
   contactNumber: { type: String },
   profilePicture: { type: String }, // Base64 string under 2MB
   otp: { type: String },
-  otpExpires: { type: Date }
+  otpExpires: { type: Date },
+  pushSubscriptions: { type: Array, default: [] }
 }, { timestamps: true });
 
 // Hash password before saving

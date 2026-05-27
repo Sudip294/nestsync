@@ -1,19 +1,27 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import http from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import webpush from 'web-push';
+
 import authRoutes from './routes/authRoutes.js';
 import noticeRoutes from './routes/noticeRoutes.js';
 import complaintRoutes from './routes/complaintRoutes.js';
 import maintenanceRoutes from './routes/maintenanceRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 
-dotenv.config();
+webpush.setVapidDetails(
+  'mailto:sudiphero294@gmail.com',
+  process.env.VAPID_PUBLIC_KEY,
+  process.env.VAPID_PRIVATE_KEY
+);
 
 const app = express();
 const server = http.createServer(app);

@@ -1,4 +1,6 @@
 import Notice from '../models/Notice.js';
+import User from '../models/User.js';
+import webpush from 'web-push';
 
 export const getNotices = async (req, res) => {
   try {
@@ -18,6 +20,25 @@ export const createNotice = async (req, res) => {
       postedBy: req.user._id,
     });
     const populatedNotice = await notice.populate('postedBy', 'name');
+
+    // Send push notification to all users
+    try {
+      const users = await User.find({ 'pushSubscriptions.0': { $exists: true } });
+      const payload = JSON.stringify({
+        title: 'New Notice Posted',
+        body: title,
+        url: '/notices'
+      });
+      
+      users.forEach(u => {
+        u.pushSubscriptions.forEach(sub => {
+          webpush.sendNotification(sub, payload).catch(err => console.error('Push error:', err));
+        });
+      });
+    } catch (e) {
+      console.error('Error sending push notifications', e);
+    }
+
     res.status(201).json(populatedNotice);
   } catch (error) {
     res.status(400).json({ message: error.message });

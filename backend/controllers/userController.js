@@ -95,3 +95,24 @@ export const deleteAccount = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Subscribe to push notifications
+export const subscribePush = async (req, res) => {
+  try {
+    const subscription = req.body;
+    const user = await User.findById(req.user._id);
+    
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    // Check if subscription already exists
+    const exists = user.pushSubscriptions.some(sub => sub.endpoint === subscription.endpoint);
+    if (!exists) {
+      user.pushSubscriptions.push(subscription);
+      await user.save();
+    }
+
+    res.status(201).json({ message: 'Subscription saved.' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
