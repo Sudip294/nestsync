@@ -17,15 +17,36 @@ export const getMaintenanceBills = async (req, res) => {
 export const generateBill = async (req, res) => {
   try {
     const { user, month, year, amount, dueDate } = req.body;
-    const bill = await Maintenance.create({
-      user,
-      month,
-      year,
-      amount,
-      dueDate,
-    });
-    const populated = await bill.populate('user', 'name flatNumber');
-    res.status(201).json(populated);
+    
+    if (user === 'all') {
+      const User = (await import('../models/User.js')).default;
+      const residents = await User.find({ role: 'resident' });
+      
+      const bills = await Promise.all(
+        residents.map(resident => 
+          Maintenance.create({
+            user: resident._id,
+            month,
+            year,
+            amount,
+            dueDate,
+          })
+        )
+      );
+      
+      const populated = await Maintenance.find({ _id: { $in: bills.map(b => b._id) } }).populate('user', 'name flatNumber');
+      return res.status(201).json(populated);
+    } else {
+      const bill = await Maintenance.create({
+        user,
+        month,
+        year,
+        amount,
+        dueDate,
+      });
+      const populated = await bill.populate('user', 'name flatNumber');
+      return res.status(201).json([populated]); // Return as array for consistency on frontend
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
