@@ -67,7 +67,7 @@ const Navbar = () => {
           <ThemeToggle />
 
           {user && (
-            <div className="flex items-center gap-3 bg-gray-100/50 dark:bg-white/5 px-3 py-1.5 rounded-full border border-gray-200/30 dark:border-white/5">
+            <div className="hidden md:flex items-center gap-3 bg-gray-100/50 dark:bg-white/5 px-3 py-1.5 rounded-full border border-gray-200/30 dark:border-white/5">
               <button 
                 onClick={() => setIsProfileModalOpen(true)}
                 className="relative w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-500 flex items-center justify-center font-semibold overflow-hidden cursor-pointer hover:ring-2 hover:ring-indigo-500 hover:ring-offset-2 dark:hover:ring-offset-gray-900 transition-all"
@@ -80,13 +80,13 @@ const Navbar = () => {
                 )}
               </button>
 
-              <div className="hidden md:block text-left cursor-pointer" onClick={() => setIsProfileModalOpen(true)}>
+              <div className="text-left cursor-pointer" onClick={() => setIsProfileModalOpen(true)}>
                 <p className="text-xs font-semibold text-gray-800 dark:text-gray-200">{user.name}</p>
                 <p className="text-[10px] text-gray-500 dark:text-gray-400 capitalize">{user.role}</p>
               </div>
               <button
                 onClick={logout}
-                className="p-1.5 rounded-full hover:bg-red-500/10 text-gray-500 hover:text-red-500 transition-all duration-300 hidden sm:block"
+                className="p-1.5 rounded-full hover:bg-red-500/10 text-gray-500 hover:text-red-500 transition-all duration-300"
                 title="Logout"
               >
                 <FiLogOut className="w-4 h-4" />
@@ -106,6 +106,31 @@ const Navbar = () => {
             transition={{ duration: 0.3, type: 'spring', bounce: 0 }}
             className="md:hidden fixed inset-x-0 top-[73px] bottom-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl z-30 p-6 flex flex-col gap-4 overflow-y-auto"
           >
+            {/* Mobile Profile Section */}
+            {user && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-white/5 mb-2 cursor-pointer shadow-sm active:scale-95 transition-transform"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsProfileModalOpen(true);
+                }}
+              >
+                <div className="relative w-12 h-12 rounded-full bg-indigo-500/20 text-indigo-500 flex items-center justify-center font-semibold overflow-hidden">
+                  {user.profilePicture ? (
+                    <img src={user.profilePicture} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    <FiUser className="w-6 h-6" />
+                  )}
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900 dark:text-white text-lg leading-tight">{user.name}</p>
+                  <p className="text-sm text-indigo-500 dark:text-indigo-400 capitalize font-medium">{user.role}</p>
+                </div>
+              </motion.div>
+            )}
+
             {links.map((link, idx) => {
               const Icon = link.icon;
               return (
