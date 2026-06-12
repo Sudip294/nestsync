@@ -5,5 +5,22 @@
 @layer base {
   body {
     @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 transition-colors duration-300;
+    top: 0 !important; /* Prevent body shift by google translate banner */
   }
+}
+
+/* Hide Google Translate top bar & tooltips */
+.skiptranslate iframe, .goog-te-banner-frame {
+  display: none !important;
+}
+#goog-gt-tt { display: none !important; }
+
+/* Hide the original element but keep it in DOM so our custom dropdown can interact with it */
+#google_translate_element {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
