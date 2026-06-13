@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMessageSquare, FiShield, FiCreditCard, FiSmartphone, FiArrowRight, FiMenu, FiX } from 'react-icons/fi';
 import ThemeToggle from '../components/ui/ThemeToggle';
+import LanguageSelector from '../components/ui/LanguageSelector';
 
 const features = [
   {
@@ -60,6 +61,7 @@ const Landing = () => {
           
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-4">
+            <LanguageSelector className="hidden lg:block" />
             <ThemeToggle />
             <Link to="/login" className="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
               Login
@@ -92,6 +94,11 @@ const Landing = () => {
             transition={{ duration: 0.3, type: 'spring', bounce: 0 }}
             className="md:hidden fixed inset-x-0 top-[73px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl z-40 p-6 flex flex-col gap-4 border-b border-gray-200 dark:border-white/5 shadow-2xl"
           >
+            <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-xl">
+              <span className="font-bold text-gray-700 dark:text-gray-300">Language</span>
+              <LanguageSelector className="w-1/2" />
+            </div>
+
             <Link 
               to="/login" 
               className="w-full text-center py-4 text-lg font-bold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
