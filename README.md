@@ -22,12 +22,12 @@ A full-stack, cloud-ready **Progressive Web App (PWA)** built for Indian co-oper
   <tr>
     <td align="center"><strong>🏠 Landing Page</strong></td>
     <td align="center"><strong>📊 Admin Dashboard</strong></td>
-    <td align="center"><strong>🚨 Complaints Portal</strong></td>
+    <td align="center"><strong>🚨 users Dashboard</strong></td>
   </tr>
   <tr>
     <td><img src="./screenshots/landing.png" alt="Landing Page" width="480"/></td>
-    <td><img src="./screenshots/dashboard.png" alt="Admin Dashboard" width="480"/></td>
-    <td><img src="./screenshots/complaints.png" alt="Complaints Portal" width="480"/></td>
+    <td><img src="./screenshots/adminDashboard.png" alt="Admin Dashboard" width="480"/></td>
+    <td><img src="./screenshots/usersDashboard.png" alt="users Dashboard" width="480"/></td>
   </tr>
 </table>
 
