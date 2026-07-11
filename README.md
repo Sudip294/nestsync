@@ -8,7 +8,7 @@
 
 A full-stack, cloud-ready **Progressive Web App (PWA)** built for Indian co-operative housing societies. Features real-time socket updates, a glassmorphism dark/light UI, multilingual support for all official Indian languages, secure role-based access, and push notifications.
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-NestSync-6366f1?style=for-the-badge)](https://nestsync-portal-project.vercel.app)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-NestSync-6366f1?style=for-the-badge)](https://nestsync-portal.vercel.app)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github)](https://github.com/Sudip294/nestsync)
 [![License: MIT](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
 
