@@ -27,8 +27,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // To be updated with frontend URL in production
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
+    origin: ['https://nestsync-portal.vercel.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
   }
 });
 
@@ -37,7 +38,7 @@ app.set('socketio', io);
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['https://nestsync-portal.vercel.app', 'http://localhost:5173'],
   credentials: true
 }));
 
