@@ -6,6 +6,7 @@ import { Input, Button } from '../components/ui/FormElements';
 import { FiPlus, FiAlertCircle } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import io from 'socket.io-client';
+import API_BASE_URL, { SOCKET_URL } from '../api';
 
 const Complaints = () => {
   const { user } = useAuth();
@@ -43,7 +44,7 @@ const Complaints = () => {
     fetchComplaints();
 
     // Socket implementation
-    const socket = io('http://localhost:5000', {
+    const socket = io(SOCKET_URL, {
       auth: { token: user?.token }
     });
     socket.on('complaintUpdated', (updatedComplaint) => {
@@ -62,7 +63,7 @@ const Complaints = () => {
   const fetchComplaints = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get('http://localhost:5000/api/complaints', config);
+      const { data } = await axios.get(`${API_BASE_URL}/api/complaints`, config);
       setComplaints(data.length > 0 ? data : defaultComplaints);
     } catch (err) {
       setComplaints(defaultComplaints);
@@ -75,7 +76,7 @@ const Complaints = () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const { data } = await axios.post(
-        'http://localhost:5000/api/complaints',
+        `${API_BASE_URL}/api/complaints`,
         { title, description, category },
         config
       );
@@ -107,7 +108,7 @@ const Complaints = () => {
   const updateStatus = async (id, status) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.put(`http://localhost:5000/api/complaints/${id}`, { status }, config);
+      const { data } = await axios.put(`${API_BASE_URL}/api/complaints/${id}`, { status }, config);
       setComplaints(complaints.map((c) => (c._id === id ? data : c)));
     } catch (err) {
       setComplaints(

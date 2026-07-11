@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import { useAuth } from '../context/AuthContext';
 import Card from '../components/ui/Card';
 import { Input, Button } from '../components/ui/FormElements';
@@ -41,7 +42,7 @@ const Notices = () => {
   const fetchNotices = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get('http://localhost:5000/api/notices', config);
+      const { data } = await axios.get(`${API_BASE_URL}/api/notices`, config);
       setNotices(data.length > 0 ? data : defaultNotices);
     } catch (err) {
       setNotices(defaultNotices);
@@ -53,7 +54,7 @@ const Notices = () => {
     setLoading(true);
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.post('http://localhost:5000/api/notices', { title, content }, config);
+      const { data } = await axios.post(`${API_BASE_URL}/api/notices`, { title, content }, config);
       setNotices([data, ...notices]);
       setTitle('');
       setContent('');
@@ -79,7 +80,7 @@ const Notices = () => {
   const handleDelete = async (id) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.delete(`http://localhost:5000/api/notices/${id}`, config);
+      await axios.delete(`${API_BASE_URL}/api/notices/${id}`, config);
       setNotices(notices.filter((n) => n._id !== id));
     } catch (err) {
       setNotices(notices.filter((n) => n._id !== id));

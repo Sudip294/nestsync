@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import { Input, Button } from '../components/ui/FormElements';
 import Card from '../components/ui/Card';
 import ThemeToggle from '../components/ui/ThemeToggle';
@@ -23,7 +24,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+      const { data } = await axios.post(`${API_BASE_URL}/api/auth/forgot-password`, { email });
       setMessage(data.message);
       setStep(2);
     } catch (error) {
@@ -40,7 +41,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/reset-password', {
+      const { data } = await axios.post(`${API_BASE_URL}/api/auth/reset-password`, {
         email,
         otp,
         newPassword

@@ -5,6 +5,7 @@ import { FiUsers, FiAlertCircle, FiFileText, FiCreditCard, FiUpload, FiSettings,
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -18,7 +19,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/users/settings');
+        const { data } = await axios.get(`${API_BASE_URL}/api/users/settings`);
         if (data) {
           setSocietyName(data.societyName || 'SmartNest Co-op');
           setSocietyLogo(data.societyLogo || '');
@@ -49,7 +50,7 @@ const Dashboard = () => {
     setSaving(true);
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.put('http://localhost:5000/api/users/settings', {
+      await axios.put(`${API_BASE_URL}/api/users/settings`, {
         societyName,
         societyLogo
       }, config);
@@ -103,7 +104,7 @@ const Dashboard = () => {
                     userVisibleOnly: true,
                     applicationServerKey: 'BNwz26JV2xh0LfJi4vRgqukyj1fWOhI4RQJUnqnB6c88IwJbHwSZAIOhFaVM1vN3nmoJ2WVP5B5SAMX8LKK3aMU'
                   });
-                  await axios.post('http://localhost:5000/api/users/push-subscribe', subscription, {
+                  await axios.post(`${API_BASE_URL}/api/users/push-subscribe`, subscription, {
                     headers: { Authorization: `Bearer ${user.token}` }
                   });
                   alert('Push notifications enabled!');

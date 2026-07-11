@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { FiCreditCard, FiCheckCircle, FiAlertTriangle, FiPlus, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 
 const Maintenance = () => {
   const { user } = useAuth();
@@ -27,7 +28,7 @@ const Maintenance = () => {
   const fetchBills = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get('http://localhost:5000/api/maintenance', config);
+      const { data } = await axios.get(`${API_BASE_URL}/api/maintenance`, config);
       setBills(data);
     } catch (err) {
       setBills([]);
@@ -42,7 +43,7 @@ const Maintenance = () => {
     // But let's try fetching users just in case. If it fails, we fall back to empty list.
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get('http://localhost:5000/api/users', config);
+      const { data } = await axios.get(`${API_BASE_URL}/api/users`, config);
       if (Array.isArray(data)) {
         setUsers(data.filter(u => u.role === 'resident'));
       }
@@ -54,7 +55,7 @@ const Maintenance = () => {
   const handlePay = async (id) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.put(`http://localhost:5000/api/maintenance/${id}/pay`, {}, config);
+      await axios.put(`${API_BASE_URL}/api/maintenance/${id}/pay`, {}, config);
       setBills(
         bills.map((b) => (b._id === id ? { ...b, status: 'paid', paidDate: new Date().toISOString() } : b))
       );
@@ -68,7 +69,7 @@ const Maintenance = () => {
     setSaving(true);
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.post('http://localhost:5000/api/maintenance', newBill, config);
+      const { data } = await axios.post(`${API_BASE_URL}/api/maintenance`, newBill, config);
       
       // data is an array of created bills
       setBills(prev => [...data, ...prev]);

@@ -5,6 +5,7 @@ import LanguageSelector from '../ui/LanguageSelector';
 import { FiLogOut, FiUser, FiGrid, FiFileText, FiAlertCircle, FiCreditCard, FiMenu, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import API_BASE_URL from '../../api';
 import ProfileModal from '../ProfileModal';
 import { NavLink } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/users/settings');
+        const { data } = await axios.get(`${API_BASE_URL}/api/users/settings`);
         if (data) setSettings(data);
       } catch (err) {
         // Fallback to default
